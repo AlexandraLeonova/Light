@@ -9,13 +9,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var lightButton: UIButton!
+    var lightButton: UIButton!
     
     var isLightOn = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        lightButton = UIButton(type: .system)
+        lightButton.titleLabel?.font = .systemFont(ofSize: 29, weight: .heavy)
+        lightButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        view.addSubview(lightButton)
+        
         updateUI()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        lightButton.frame = view.bounds
     }
    
     fileprivate func updateUI() {
@@ -24,7 +36,8 @@ class ViewController: UIViewController {
         lightButton.tintColor = isLightOn ? .black : .white
     }
     
-    @IBAction func buttonPressed(_ sender: Any) {
+    @objc
+    func buttonPressed(_ sender: Any) {
         isLightOn.toggle()
         updateUI()
     }
